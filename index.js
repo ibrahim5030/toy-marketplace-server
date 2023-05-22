@@ -31,7 +31,10 @@ async function run() {
 
     const carsCollection = client.db('carsDB').collection('cars');
 
-
+    app.get('/cars', async(req, res)=>{
+      const result = await carsCollection.find().toArray();
+      res.send(result);
+    })
 
 
     // Send a ping to confirm a successful connection
