@@ -31,13 +31,15 @@ async function run() {
 
     const carsCollection = client.db('carsDB').collection('cars');
 
-    app.get('/cars', async(req, res)=>{
-      const result = await carsCollection.find().toArray();
+    app.get('/cars', async (req, res) => {
+      console.log(req.query);
+      const limit = parseInt(req.query.limit) || 20;
+      const result = await carsCollection.find().limit(limit).toArray();
       res.send(result);
     })
 
     app.get('/cars/:id', async (req, res) => {
-      const id = req.params.id;      
+      const id = req.params.id;
       const query = { _id: new ObjectId(id) };
       const result = await carsCollection.findOne(query);
       res.send(result);
@@ -57,9 +59,9 @@ run().catch(console.dir);
 
 
 app.get('/', (req, res) => {
-    res.send('server is running')
+  res.send('server is running')
 })
 
 app.listen(port, () => {
-    console.log(`server is running on port: ${port}`)
+  console.log(`server is running on port: ${port}`)
 })
