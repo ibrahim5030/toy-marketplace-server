@@ -45,6 +45,16 @@ async function run() {
       res.send(result);
     })
 
+    app.get('/cartoy', async(req, res)=>{
+      const result = await carsCollection.find().sort({"price":1}).toArray();
+      res.send(result);
+    })
+    
+    app.get('/cartoys', async(req, res)=>{
+      const result = await carsCollection.find().sort({"price":-1}).toArray();
+      res.send(result);
+    })
+
     app.post('/cars', async (req, res) => {
       const addToy = req.body;
       console.log(addToy);
